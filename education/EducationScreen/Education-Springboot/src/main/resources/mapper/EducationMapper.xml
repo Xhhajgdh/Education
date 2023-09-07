@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.analysis.mapper.EdudationMapper">
+    <select id="selectAll" resultType="com.edu.analysis.pojo.Education">
+        SELECT  `id`,  `nicak_name`,  `order_pay`,  `order_pay_way`,  `rent_way`,  `cource_type`,  `vip_grade_floor`,  `cource_teacher`,  `area`,  `address`,  LEFT(`pic`, 256),  `time`,  `agent_name`,  `house_disposal`,  `house_spot`,  LEFT(`house_desc`, 256),  LEFT(`url`, 256) FROM `rent_crawler`.`education_info` ORDER BY `order_pay_way`;
+    </select>
+    <select id="selectAnalysis" resultType="java.util.HashMap">
+        SELECT ${cate} as 'cate', count(*) as 'count' from education_info group by ${cate}
+    </select>
+    <select id="selectAnalysis2" resultType="java.util.HashMap">
+        SELECT student_age AS 'cate',order_pay AS 'count' FROM education_info  GROUP BY student_age
+    </select>
+    <select id="selectAnalysis3" resultType="java.util.HashMap">
+        SELECT AREA AS 'cate',AVG(order_pay) AS 'count' FROM education_info GROUP BY AREA
+    </select>
+    <select id="selectAnalysis4" resultType="java.util.HashMap">
+        select elt(interval(student_age,0,5,10,15,20,25,30,35,40),"0-5岁","5-10岁","10-15岁","15-20岁","20-25岁","25-30岁","35-40岁","40-45岁","45岁+") AS 'cate' ,count(*) AS 'count'
+        from education_info group by cate;
+    </select>
+</mapper>
